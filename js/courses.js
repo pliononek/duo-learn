@@ -42,7 +42,9 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Ihr habt ein schönes Haus.',
                         lang: 'de-DE',
                         options: ['habt', 'hat', 'haben', 'hast'],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Ihr habt ein schönes Haus.',
+                        explanation: 'Dla osoby "ihr" czasownik haben przyjmuje formę "habt".'
                     },
                     {
                         type: 'multiple_choice',
@@ -50,19 +52,25 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Wir sind heute sehr müde.',
                         lang: 'de-DE',
                         options: ['sind', 'seid', 'ist', 'bin'],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Wir sind heute sehr müde.',
+                        explanation: 'Dla osoby "wir" czasownik sein to "sind".'
                     },
                     {
                         type: 'type_in',
                         prompt: 'Wpisz formę czasownika sein dla "er/sie/es":',
                         acceptedAnswers: ['ist', 'er ist', 'sie ist', 'es ist'],
-                        hint: '3 litery, zaczyna się na i...'
+                        hint: '3 litery, zaczyna się na i...',
+                        fullSentence: 'Er / sie / es ist.',
+                        explanation: 'Odmiana sein w 3. os. l.poj.: er/sie/es ist.'
                     },
                     {
                         type: 'type_in',
                         prompt: 'Wpisz formę czasownika haben dla "du":',
                         acceptedAnswers: ['hast', 'du hast'],
-                        hint: 'du h_ _ t'
+                        hint: 'du h_ _ t',
+                        fullSentence: 'Du hast.',
+                        explanation: 'Odmiana haben w 2. os. l.poj.: du hast.'
                     }
                 ]
             },
@@ -99,7 +107,9 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Wem?',
                         lang: 'de-DE',
                         options: ['Wem?', 'Wen?', 'Wer?', 'Wo?'],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Wem? (Komu?)',
+                        explanation: 'Wem odpowiada na pytanie celownika (Dativ: komu? czemu?).'
                     },
                     {
                         type: 'multiple_choice',
@@ -107,13 +117,17 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Wen?',
                         lang: 'de-DE',
                         options: ['Wen?', 'Wem?', 'Wie?', 'Was?'],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Wen? (Kogo?)',
+                        explanation: 'Wen odpowiada na pytanie biernika (Akkusativ: kogo? co?).'
                     },
                     {
                         type: 'type_in',
                         prompt: 'Wpisz zaimek pytający oznaczający "Dlaczego?":',
-                        acceptedAnswers: ['warum'],
-                        hint: 'Zaczyna się na W...'
+                        acceptedAnswers: ['warum', 'Warum'],
+                        hint: 'Zaczyna się na W...',
+                        fullSentence: 'Warum? (Dlaczego?)',
+                        explanation: 'Dlaczego po niemiecku to "Warum".'
                     },
                     {
                         type: 'word_bank',
@@ -122,7 +136,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Wohin', 'gehst', 'du', 'heute?'],
                         distractors: ['Wo', 'ist', 'Wer'],
-                        correctSentence: 'Wohin gehst du heute?'
+                        correctSentence: 'Wohin gehst du heute?',
+                        fullSentence: 'Wohin gehst du heute?',
+                        explanation: 'Dokąd = Wohin. W pytaniach szczegółowych zaimek stoi na 1. miejscu, a czasownik na 2.'
                     }
                 ]
             }
@@ -289,7 +305,9 @@ const GERMAN_COURSE_UNITS = [
                             'Na pierwszym miejscu',
                             'Zaraz po podmiocie'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Partizip II stoi ZAWSZE na samym końcu zdania.',
+                        explanation: 'W czasie Perfekt odmieniony czasownik posiłkowy stoi na 2. miejscu, a Partizip II zamyka zdanie.'
                     },
                     {
                         type: 'word_bank',
@@ -298,7 +316,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Ich', 'habe', 'am', 'Montag', 'Tennis', 'gespielt.'],
                         distractors: ['bist', 'spielte', 'hat'],
-                        correctSentence: 'Ich habe am Montag Tennis gespielt.'
+                        correctSentence: 'Ich habe am Montag Tennis gespielt.',
+                        fullSentence: 'Ich habe am Montag Tennis gespielt.',
+                        explanation: 'Podmiot (Ich) + posiłkowy (habe) na 2. miejscu + imiesłów (gespielt) na samym końcu.'
                     },
                     {
                         type: 'word_bank',
@@ -307,7 +327,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Wir', 'haben', 'im', 'Garten', 'gespielt.'],
                         distractors: ['sind', 'habt', 'spielen'],
-                        correctSentence: 'Wir haben im Garten gespielt.'
+                        correctSentence: 'Wir haben im Garten gespielt.',
+                        fullSentence: 'Wir haben im Garten gespielt.',
+                        explanation: 'Posiłkowy haben (dla wir) na 2. miejscu, a imiesłów gespielt na końcu.'
                     },
                     {
                         type: 'word_bank',
@@ -316,7 +338,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Frau', 'Dermat,', 'haben', 'Sie', 'Ball', 'gespielt?'],
                         distractors: ['hat', 'bist', 'Tennis'],
-                        correctSentence: 'Frau Dermat, haben Sie Ball gespielt?'
+                        correctSentence: 'Frau Dermat, haben Sie Ball gespielt?',
+                        fullSentence: 'Frau Dermat, haben Sie Ball gespielt?',
+                        explanation: 'W pytaniu czasownik posiłkowy (haben) stoi przed podmiotem (Sie), a gespielt na końcu.'
                     },
                     {
                         type: 'multiple_choice',
@@ -324,7 +348,9 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Du hast Fußball gespielt.',
                         lang: 'de-DE',
                         options: ['hast', 'habe', 'hat', 'haben'],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Du hast Fußball gespielt.',
+                        explanation: 'Dla osoby "du" czasownik posiłkowy to "hast".'
                     }
                 ]
             }
@@ -351,7 +377,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Ich', 'habe', 'in', 'der', 'Disko', 'getanzt.'],
                         distractors: ['bin', 'tanzen', 'gehört'],
-                        correctSentence: 'Ich habe in der Disko getanzt.'
+                        correctSentence: 'Ich habe in der Disko getanzt.',
+                        fullSentence: 'Ich habe in der Disko getanzt.',
+                        explanation: 'Zad 1: tanzen -> getanzt. Czasownik posiłkowy dla "ich": habe.'
                     },
                     {
                         type: 'word_bank',
@@ -360,7 +388,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Hast', 'du', 'alles', 'eingekauft?'],
                         distractors: ['Haben', 'gekauft', 'bist'],
-                        correctSentence: 'Hast du alles eingekauft?'
+                        correctSentence: 'Hast du alles eingekauft?',
+                        fullSentence: 'Hast du alles eingekauft?',
+                        explanation: 'Zad 2: einkaufen -> eingekauft (czasownik rozdzielnie złożony). Posiłkowy dla du: Hast.'
                     },
                     {
                         type: 'word_bank',
@@ -369,7 +399,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Meine', 'Schwester', 'hat', 'Medizin', 'in', 'Krakau', 'studiert.'],
                         distractors: ['haben', 'gestudiert', 'ist'],
-                        correctSentence: 'Meine Schwester hat Medizin in Krakau studiert.'
+                        correctSentence: 'Meine Schwester hat Medizin in Krakau studiert.',
+                        fullSentence: 'Meine Schwester hat Medizin in Krakau studiert.',
+                        explanation: 'Zad 3: studieren -> studiert (końcówka -ieren bez przedrostka ge-!). Meine Schwester (sie) -> hat.'
                     },
                     {
                         type: 'multiple_choice',
@@ -380,7 +412,9 @@ const GERMAN_COURSE_UNITS = [
                             'ist ... organisiert',
                             'hat ... georganisiert'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Wer hat die Party organisiert?',
+                        explanation: 'Zad 4: organisieren -> organisiert (bez ge-!). Zaimek "Wer" łączy się z 3. os. l.poj. (hat).'
                     },
                     {
                         type: 'multiple_choice',
@@ -391,7 +425,9 @@ const GERMAN_COURSE_UNITS = [
                             'ist ... gehört',
                             'hat ... gehortet'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Thomas hat Musik gehört.',
+                        explanation: 'Zad 5: hören -> gehört. Thomas = er (hat).'
                     },
                     {
                         type: 'word_bank',
@@ -400,7 +436,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Meine', 'Eltern', 'haben', 'das', 'alte', 'Auto', 'auf', 'OLX', 'verkauft.'],
                         distractors: ['hat', 'geverkauft', 'sind'],
-                        correctSentence: 'Meine Eltern haben das alte Auto auf OLX verkauft.'
+                        correctSentence: 'Meine Eltern haben das alte Auto auf OLX verkauft.',
+                        fullSentence: 'Meine Eltern haben das alte Auto auf OLX verkauft.',
+                        explanation: 'Zad 6: verkaufen -> verkauft (nierozdzielny przedrostek ver- bez ge-!). Meine Eltern (oni) -> haben.'
                     }
                 ]
             },
@@ -418,7 +456,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Julia', 'hat', 'mein', 'Porträt', 'gezeichnet.'],
                         distractors: ['haben', 'gezeichnetet', 'ist'],
-                        correctSentence: 'Julia hat mein Porträt gezeichnet.'
+                        correctSentence: 'Julia hat mein Porträt gezeichnet.',
+                        fullSentence: 'Julia hat mein Porträt gezeichnet.',
+                        explanation: 'Zad 7: zeichnen -> gezeichnet (końcówka -et po -chn). Julia (sie) -> hat.'
                     },
                     {
                         type: 'word_bank',
@@ -427,7 +467,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Wie', 'lange', 'habt', 'ihr', 'auf', 'mich', 'gewartet?'],
                         distractors: ['hat', 'warten', 'haben'],
-                        correctSentence: 'Wie lange habt ihr auf mich gewartet?'
+                        correctSentence: 'Wie lange habt ihr auf mich gewartet?',
+                        fullSentence: 'Wie lange habt ihr auf mich gewartet?',
+                        explanation: 'Zad 8: warten -> gewartet (końcówka -et po temacie na -t). Posiłkowy dla ihr: habt.'
                     },
                     {
                         type: 'multiple_choice',
@@ -438,7 +480,9 @@ const GERMAN_COURSE_UNITS = [
                             'haben ... gehört',
                             'hat ... gegehört'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Er hat zur polnischen Mannschaft gehört.',
+                        explanation: 'Zad 9: gehören -> gehört (czasownik z ge- w temacie, bez dodatkowego przedrostka).'
                     },
                     {
                         type: 'word_bank',
@@ -447,7 +491,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Wir', 'haben', 'gestern', 'das', 'ganze', 'Haus', 'aufgeräumt.'],
                         distractors: ['hat', 'geaufräumt', 'waren'],
-                        correctSentence: 'Wir haben gestern das ganze Haus aufgeräumt.'
+                        correctSentence: 'Wir haben gestern das ganze Haus aufgeräumt.',
+                        fullSentence: 'Wir haben gestern das ganze Haus aufgeräumt.',
+                        explanation: 'Zad 10: aufräumen -> aufgeräumt (rozdzielnie złożony: auf + ge + räum + t). Wir -> haben.'
                     },
                     {
                         type: 'multiple_choice',
@@ -458,7 +504,9 @@ const GERMAN_COURSE_UNITS = [
                             'hat ... gearbeit',
                             'ist ... gearbeitet'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Warum hat dein Vater am Sonntag gearbeitet?',
+                        explanation: 'Zad 11: arbeiten -> gearbeitet (końcówka -et po -t). Dein Vater (er) -> hat.'
                     },
                     {
                         type: 'multiple_choice',
@@ -469,7 +517,9 @@ const GERMAN_COURSE_UNITS = [
                             'Habt ... gebsucht',
                             'Seid ... besucht'
                         ],
-                        correctIndex: 0
+                        correctIndex: 0,
+                        fullSentence: 'Habt ihr am Samstag die Oma besucht?',
+                        explanation: 'Zad 12: besuchen -> besucht (nierozdzielny przedrostek be- bez ge-!). Posiłkowy dla ihr: Habt.'
                     },
                     {
                         type: 'word_bank',
@@ -478,7 +528,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Am', 'Abend', 'habe', 'ich', 'schnell', 'geduscht.'],
                         distractors: ['hat', 'geduschet', 'bin'],
-                        correctSentence: 'Am Abend habe ich schnell geduscht.'
+                        correctSentence: 'Am Abend habe ich schnell geduscht.',
+                        fullSentence: 'Am Abend habe ich schnell geduscht.',
+                        explanation: 'Zad 13: duschen -> geduscht. Po okoliczniku czasu (Am Abend) następuje szyk przestawny: orzeczenie (habe) przed podmiotem (ich).'
                     },
                     {
                         type: 'word_bank',
@@ -487,7 +539,9 @@ const GERMAN_COURSE_UNITS = [
                         lang: 'de-DE',
                         tokens: ['Hast', 'du', 'schon', 'dein', 'Geburtstagsgeschenk', 'aufgemacht?'],
                         distractors: ['Haben', 'geaufmacht', 'bist'],
-                        correctSentence: 'Hast du schon dein Geburtstagsgeschenk aufgemacht?'
+                        correctSentence: 'Hast du schon dein Geburtstagsgeschenk aufgemacht?',
+                        fullSentence: 'Hast du schon dein Geburtstagsgeschenk aufgemacht?',
+                        explanation: 'Zad 14: aufmachen -> aufgemacht (rozdzielnie złożony: auf + ge + mach + t). Posiłkowy dla du: Hast.'
                     }
                 ]
             }

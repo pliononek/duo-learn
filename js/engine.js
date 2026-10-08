@@ -62,11 +62,22 @@ class LessonEngine {
         document.getElementById('btn-check').addEventListener('click', () => this.handleActionClick());
 
         // Update mascot
-        window.Mascot.render('lesson-mascot', 'happy', 95);
+        if (this.currentQuestion.isRepeat) {
+            window.Mascot.render('lesson-mascot', 'thinking', 95);
+        } else {
+            window.Mascot.render('lesson-mascot', 'happy', 95);
+        }
 
         // Render question container
         const stage = document.getElementById('question-stage');
         stage.innerHTML = '';
+
+        if (this.currentQuestion.isRepeat) {
+            const badge = document.createElement('div');
+            badge.className = 'repeat-question-badge';
+            badge.innerHTML = `<span>🔁</span> Powtórka: Popracujmy nad wcześniejszym błędem!`;
+            stage.appendChild(badge);
+        }
 
         switch (this.currentQuestion.type) {
             case 'multiple_choice':
@@ -485,13 +496,15 @@ class LessonEngine {
             this.updateProgressBar();
 
             dock.className = 'dock-container state-correct';
+            const titleMsg = q.isRepeat ? 'Świetnie! Błąd opanowany! 🎯' : 'Doskonale!';
+            const subMsg = q.isRepeat ? 'Tym razem poszło bezbłędnie!' : 'Świetna robota, tak trzymaj!';
             dock.innerHTML = `
                 <div class="dock-content">
                     <div class="feedback-badge">
                         <span class="feedback-icon">✓</span>
                         <div class="feedback-text">
-                            <h3>Doskonale!</h3>
-                            <p>Świetna robota, tak trzymaj!</p>
+                            <h3>${titleMsg}</h3>
+                            <p>${subMsg}</p>
                         </div>
                     </div>
                     <button id="btn-next" class="duo-btn duo-btn-success">DALEJ (Enter)</button>
@@ -503,6 +516,7 @@ class LessonEngine {
             this.mistakesCount++;
 
             // Push this question back to the end of the queue to repeat!
+            q.isRepeat = true;
             this.queue.push(q);
 
             const heartsLeft = window.duoStorage.loseHeart();
@@ -511,6 +525,9 @@ class LessonEngine {
                 heartsBadge.textContent = heartsLeft;
             }
 
+            const fullSolution = q.fullSentence || solutionText;
+            const explanationHtml = q.explanation ? `<div class="feedback-explanation">💡 ${q.explanation}</div>` : '';
+
             dock.className = 'dock-container state-wrong';
             dock.innerHTML = `
                 <div class="dock-content">
@@ -518,12 +535,21 @@ class LessonEngine {
                         <span class="feedback-icon">✕</span>
                         <div class="feedback-text">
                             <h3>Poprawna odpowiedź:</h3>
-                            <p class="correct-solution">${solutionText}</p>
+                            <div class="correct-solution-box">
+                                <span class="correct-solution-text">${fullSolution}</span>
+                                <button class="feedback-speak-btn" id="btn-feedback-speak" title="Posłuchaj wymowy">🔊</button>
+                            </div>
+                            ${explanationHtml}
                         </div>
                     </div>
                     <button id="btn-next" class="duo-btn duo-btn-danger">ROZUMIEM (Enter)</button>
                 </div>
             `;
+
+            document.getElementById('btn-feedback-speak')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.speak(fullSolution, q.lang || 'de-DE');
+            });
 
             if (heartsLeft <= 0) {
                 setTimeout(() => {
