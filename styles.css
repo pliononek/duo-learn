@@ -575,43 +575,65 @@ body {
     color: var(--duo-blue);
 }
 
-/* Pairs Grid */
-.pairs-grid {
+/* Pairs Columns Container (Duolingo 2-column matching) */
+.pairs-columns-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     width: 100%;
+}
+
+.pairs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .pair-card {
     background-color: #ffffff;
     border: 2px solid var(--duo-gray);
     box-shadow: 0 4px 0 var(--duo-gray-shadow);
-    border-radius: 14px;
-    padding: 14px;
+    border-radius: 16px;
+    padding: 16px 14px;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     text-align: center;
-    transition: all 0.1s ease;
+    transition: all 0.12s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    line-height: 1.25;
+}
+
+.pair-card:active:not(.matched) {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--duo-gray-shadow);
 }
 
 .pair-card.active-pair {
     border-color: var(--duo-blue);
     background-color: #ddf4ff;
-    box-shadow: 0 4px 0 var(--duo-blue);
+    box-shadow: 0 4px 0 #84d8ff;
+    color: #0c82bf;
 }
 
 .pair-card.matched {
-    opacity: 0.35;
+    opacity: 0.3;
     pointer-events: none;
     border-color: var(--duo-green);
     background-color: #e5ffdb;
+    box-shadow: 0 2px 0 var(--duo-green-shadow);
+    transform: none;
+    cursor: default;
 }
 
 .pair-card.wrong-pair {
-    border-color: var(--duo-red);
-    background-color: #ffdfe0;
+    border-color: var(--duo-red) !important;
+    background-color: #ffdfe0 !important;
+    box-shadow: 0 4px 0 var(--duo-red-shadow) !important;
+    color: var(--duo-red) !important;
     animation: duoShake 0.4s ease;
 }
 

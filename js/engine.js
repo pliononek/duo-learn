@@ -252,73 +252,119 @@ class LessonEngine {
 
     renderMatchPairs(container) {
         const q = this.currentQuestion;
-        const leftItems = q.pairs.map((p, i) => ({ text: p.left, id: i, side: 'left' }));
-        const rightItems = q.pairs.map((p, i) => ({ text: p.right, id: i, side: 'right' }));
+        const totalPairs = q.pairs.length;
+        let matchedCount = 0;
+        let selectedLeft = null;
+        let selectedRight = null;
+        let isChecking = false;
 
-        const allItems = [...leftItems, ...rightItems].sort(() => 0.5 - Math.random());
+        // Shuffle left and right independently
+        const shuffledLeft = q.pairs.map((p, i) => ({ text: p.left, id: i })).sort(() => 0.5 - Math.random());
+        const shuffledRight = q.pairs.map((p, i) => ({ text: p.right, id: i })).sort(() => 0.5 - Math.random());
 
         container.innerHTML = `
             <div class="question-header">
                 <h2 class="question-title">${q.prompt}</h2>
             </div>
-            <div class="pairs-grid">
-                ${allItems.map((item, idx) => `
-                    <button class="pair-card" data-idx="${idx}" data-side="${item.side}" data-pair-id="${item.id}">
-                        ${item.text}
-                    </button>
-                `).join('')}
+            <div class="pairs-columns-container">
+                <div class="pairs-col col-left">
+                    ${shuffledLeft.map(item => `
+                        <button class="pair-card" data-side="left" data-pair-id="${item.id}">
+                            ${item.text}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="pairs-col col-right">
+                    ${shuffledRight.map(item => `
+                        <button class="pair-card" data-side="right" data-pair-id="${item.id}">
+                            ${item.text}
+                        </button>
+                    `).join('')}
+                </div>
             </div>
         `;
 
-        let selectedCards = [];
-        const totalPairs = q.pairs.length;
-        let matchedCount = 0;
+        const checkPair = () => {
+            if (!selectedLeft || !selectedRight) return;
+            const leftId = selectedLeft.dataset.pairId;
+            const rightId = selectedRight.dataset.pairId;
+
+            if (leftId === rightId) {
+                // Correct match!
+                window.soundFX.playTileSelect();
+                const cardL = selectedLeft;
+                const cardR = selectedRight;
+                cardL.classList.remove('active-pair');
+                cardR.classList.remove('active-pair');
+                cardL.classList.add('matched');
+                cardR.classList.add('matched');
+                selectedLeft = null;
+                selectedRight = null;
+                matchedCount++;
+
+                if (matchedCount === totalPairs) {
+                    this.userAnswer = true;
+                    this.enableCheckButton(true);
+                    setTimeout(() => {
+                        if (!this.isEvaluated) {
+                            this.evaluateAnswer();
+                        }
+                    }, 400);
+                }
+            } else {
+                // Wrong match!
+                isChecking = true;
+                window.soundFX.playIncorrect();
+                const cardL = selectedLeft;
+                const cardR = selectedRight;
+                cardL.classList.add('wrong-pair');
+                cardR.classList.add('wrong-pair');
+
+                setTimeout(() => {
+                    cardL.classList.remove('active-pair', 'wrong-pair');
+                    cardR.classList.remove('active-pair', 'wrong-pair');
+                    selectedLeft = null;
+                    selectedRight = null;
+                    isChecking = false;
+                }, 450);
+            }
+        };
 
         const cards = container.querySelectorAll('.pair-card');
         cards.forEach(card => {
             card.addEventListener('click', () => {
-                if (this.isEvaluated || card.classList.contains('matched')) return;
+                if (this.isEvaluated || isChecking || card.classList.contains('matched')) return;
 
-                window.soundFX.playClick();
+                const side = card.dataset.side;
 
-                if (card.classList.contains('active-pair')) {
-                    card.classList.remove('active-pair');
-                    selectedCards = [];
-                    return;
-                }
-
-                card.classList.add('active-pair');
-                selectedCards.push(card);
-
-                if (selectedCards.length === 2) {
-                    const [first, second] = selectedCards;
-                    if (first.dataset.pairId === second.dataset.pairId && first.dataset.side !== second.dataset.side) {
-                        // Correct pair match!
-                        window.soundFX.playTileSelect();
-                        first.classList.remove('active-pair');
-                        second.classList.remove('active-pair');
-                        first.classList.add('matched');
-                        second.classList.add('matched');
-                        matchedCount++;
-
-                        if (matchedCount === totalPairs) {
-                            this.userAnswer = true;
-                            this.enableCheckButton(true);
-                            // Auto check when all pairs matched
-                            setTimeout(() => this.evaluateAnswer(), 300);
-                        }
+                if (side === 'left') {
+                    if (selectedLeft === card) {
+                        // Click same card again -> deselect
+                        window.soundFX.playClick();
+                        card.classList.remove('active-pair');
+                        selectedLeft = null;
                     } else {
-                        // Wrong match
-                        first.classList.add('wrong-pair');
-                        second.classList.add('wrong-pair');
-                        window.soundFX.playIncorrect();
-
-                        setTimeout(() => {
-                            first.classList.remove('active-pair', 'wrong-pair');
-                            second.classList.remove('active-pair', 'wrong-pair');
-                        }, 500);
+                        // Select new left card
+                        window.soundFX.playClick();
+                        if (selectedLeft) selectedLeft.classList.remove('active-pair');
+                        selectedLeft = card;
+                        card.classList.add('active-pair');
+                        if (selectedRight) checkPair();
                     }
-                    selectedCards = [];
+                } else {
+                    if (selectedRight === card) {
+                        // Click same card again -> deselect
+                        window.soundFX.playClick();
+                        card.classList.remove('active-pair');
+                        selectedRight = null;
+                    } else {
+                        // Select new right card
+                        window.soundFX.playClick();
+                        if (selectedRight) selectedRight.classList.remove('active-pair');
+                        selectedRight = card;
+                        card.classList.add('active-pair');
+                        if (selectedLeft) checkPair();
+                    }
                 }
             });
         });
@@ -405,22 +451,25 @@ class LessonEngine {
     }
 
     evaluateAnswer() {
+        if (this.isEvaluated) return;
         this.isEvaluated = true;
         const q = this.currentQuestion;
         let isCorrect = false;
         let solutionText = '';
 
+        const clean = str => (str || '').toLowerCase().replace(/[,.?!:;]/g, '').replace(/\s+/g, ' ').trim();
+
         if (q.type === 'multiple_choice' || q.type === 'listen') {
             isCorrect = (this.userAnswer === q.correctIndex);
             solutionText = q.options[q.correctIndex];
         } else if (q.type === 'word_bank') {
-            const cleanUser = (this.userAnswer || '').toLowerCase().replace(/[,.?!]/g, '').trim();
-            const cleanTarget = (q.correctSentence || '').toLowerCase().replace(/[,.?!]/g, '').trim();
+            const cleanUser = clean(this.userAnswer);
+            const cleanTarget = clean(q.correctSentence);
             isCorrect = (cleanUser === cleanTarget);
             solutionText = q.correctSentence;
         } else if (q.type === 'type_in') {
-            const cleanUser = (this.userAnswer || '').toLowerCase().replace(/[,.?!]/g, '').trim();
-            isCorrect = q.acceptedAnswers.some(ans => ans.toLowerCase().replace(/[,.?!]/g, '').trim() === cleanUser);
+            const cleanUser = clean(this.userAnswer);
+            isCorrect = q.acceptedAnswers.some(ans => clean(ans) === cleanUser);
             solutionText = q.acceptedAnswers[0];
         } else if (q.type === 'match_pairs') {
             isCorrect = true;
@@ -478,9 +527,9 @@ class LessonEngine {
 
             if (heartsLeft <= 0) {
                 setTimeout(() => {
-                    alert('Skończyły Ci się serduszka! Zregenerowaliśmy je na potrzeby treningu.');
                     window.duoStorage.refillHearts();
-                }, 300);
+                    if (heartsBadge) heartsBadge.textContent = '5';
+                }, 400);
             }
         }
 
@@ -528,6 +577,15 @@ class LessonEngine {
         window.addEventListener('keydown', (e) => {
             const isLessonActive = !document.getElementById('view-lesson').classList.contains('hidden');
             if (!isLessonActive) return;
+
+            // Don't intercept if user is typing in text input
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.handleActionClick();
+                }
+                return;
+            }
 
             if (e.key === 'Enter') {
                 const btnCheck = document.getElementById('btn-check');

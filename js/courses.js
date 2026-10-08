@@ -21,7 +21,8 @@ const GERMAN_COURSE_UNITS = [
                             { left: 'ich', right: 'habe' },
                             { left: 'du', right: 'hast' },
                             { left: 'er / sie / es', right: 'hat' },
-                            { left: 'wir / sie / Sie', right: 'haben' }
+                            { left: 'wir / sie / Sie', right: 'haben' },
+                            { left: 'ihr', right: 'habt' }
                         ]
                     },
                     {
@@ -31,6 +32,7 @@ const GERMAN_COURSE_UNITS = [
                             { left: 'ich', right: 'bin' },
                             { left: 'du', right: 'bist' },
                             { left: 'er / sie / es', right: 'ist' },
+                            { left: 'wir / sie / Sie', right: 'sind' },
                             { left: 'ihr', right: 'seid' }
                         ]
                     },
@@ -53,13 +55,13 @@ const GERMAN_COURSE_UNITS = [
                     {
                         type: 'type_in',
                         prompt: 'Wpisz formę czasownika sein dla "er/sie/es":',
-                        acceptedAnswers: ['ist'],
+                        acceptedAnswers: ['ist', 'er ist', 'sie ist', 'es ist'],
                         hint: '3 litery, zaczyna się na i...'
                     },
                     {
                         type: 'type_in',
                         prompt: 'Wpisz formę czasownika haben dla "du":',
-                        acceptedAnswers: ['hast'],
+                        acceptedAnswers: ['hast', 'du hast'],
                         hint: 'du h_ _ t'
                     }
                 ]
@@ -184,13 +186,13 @@ const GERMAN_COURSE_UNITS = [
                     {
                         type: 'type_in',
                         prompt: 'Utwórz Partizip II od czasownika "malen" (malować):',
-                        acceptedAnswers: ['gemalt'],
+                        acceptedAnswers: ['gemalt', 'haben gemalt', 'haben + gemalt', 'hat gemalt'],
                         hint: 'ge + mal + t'
                     },
                     {
                         type: 'type_in',
                         prompt: 'Utwórz Partizip II od czasownika "wohnen" (mieszkać):',
-                        acceptedAnswers: ['gewohnt'],
+                        acceptedAnswers: ['gewohnt', 'haben gewohnt', 'haben + gewohnt', 'hat gewohnt'],
                         hint: 'ge + wohn + t'
                     }
                 ]
@@ -266,7 +268,7 @@ const GERMAN_COURSE_UNITS = [
                     {
                         type: 'type_in',
                         prompt: 'Wpisz formę Partizip II dla "einkaufen":',
-                        acceptedAnswers: ['eingekauft'],
+                        acceptedAnswers: ['eingekauft', 'haben eingekauft', 'haben + eingekauft', 'hat eingekauft', 'hast eingekauft'],
                         hint: 'ein + ge + kauf + t'
                     }
                 ]
@@ -348,7 +350,7 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Ich habe in der Disko getanzt.',
                         lang: 'de-DE',
                         tokens: ['Ich', 'habe', 'in', 'der', 'Disko', 'getanzt.'],
-                        distractors: ['bin', 'getanzt', 'gehört'],
+                        distractors: ['bin', 'tanzen', 'gehört'],
                         correctSentence: 'Ich habe in der Disko getanzt.'
                     },
                     {
@@ -424,7 +426,7 @@ const GERMAN_COURSE_UNITS = [
                         audioPrompt: 'Wie lange habt ihr auf mich gewartet?',
                         lang: 'de-DE',
                         tokens: ['Wie', 'lange', 'habt', 'ihr', 'auf', 'mich', 'gewartet?'],
-                        distractors: ['hat', 'gewartet', 'haben'],
+                        distractors: ['hat', 'warten', 'haben'],
                         correctSentence: 'Wie lange habt ihr auf mich gewartet?'
                     },
                     {
