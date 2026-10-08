@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuoLearn - Ucz się efektywnie jak w Duolingo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Confetti celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="top-navbar">
+        <div class="nav-container">
+            <div class="logo-group" id="nav-logo" title="DuoLearn">
+                <span style="font-size: 28px;">🦉</span>
+                <span class="app-title">DuoLearn</span>
+            </div>
+
+            <div class="stats-group">
+                <div class="stat-item stat-streak" title="Twój streak (dni z rzędu)">
+                    <span>🔥</span>
+                    <span id="stat-streak">0</span>
+                </div>
+                <div class="stat-item stat-gems" title="Kryształy">
+                    <span>💎</span>
+                    <span id="stat-gems">100</span>
+                </div>
+                <div class="stat-item stat-hearts" id="stat-hearts-box" title="Serca (kliknij, aby zregenerować)">
+                    <span>❤️</span>
+                    <span id="stat-hearts">5</span>
+                </div>
+                <div class="stat-item stat-xp" title="Dzisiejszy cel XP">
+                    <span>⚡</span>
+                    <span id="stat-xp">0 / 30 XP</span>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <button class="sound-toggle-btn" id="btn-sound-toggle" title="Wycisz / włącz dźwięki">🔊</button>
+                <button class="duo-btn btn-add-custom" id="btn-open-creator">➕ Własny materiał</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Learning Path View -->
+    <main id="view-path" class="view-container">
+        <div class="path-layout">
+            <div class="learning-path-column" id="learning-path-container">
+                <!-- Wygenerowane dynamicznie przez app.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Active Lesson View -->
+    <section id="view-lesson" class="view-container hidden">
+        <div class="lesson-top-bar">
+            <button class="btn-icon-exit" id="btn-exit-lesson" title="Wyjdź z lekcji">✕</button>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="lesson-progress-fill"></div>
+            </div>
+            <div class="lesson-hearts-badge" title="Pozostałe życia">
+                ❤️ <span id="lesson-hearts-val">5</span>
+            </div>
+        </div>
+
+        <div class="lesson-content-wrap">
+            <div class="mascot-row" id="lesson-mascot">
+                <!-- SVG Sowa generowana przez mascot.js -->
+            </div>
+
+            <div class="question-stage" id="question-stage">
+                <!-- Pytanie generowane dynamicznie przez engine.js -->
+            </div>
+        </div>
+
+        <!-- Sticky Bottom Feedback Dock -->
+        <div id="lesson-bottom-dock" class="dock-container state-idle">
+            <div class="dock-content">
+                <button id="btn-check" class="duo-btn duo-btn-primary" disabled>SPRAWDŹ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lesson Summary / Victory View -->
+    <section id="view-summary" class="view-container hidden">
+        <div class="summary-card">
+            <div id="summary-mascot"></div>
+            <h1 class="summary-title">Lekcja ukończona!</h1>
+            
+            <div class="summary-stats-grid">
+                <div class="summary-stat-box">
+                    <div class="summary-stat-val" id="summary-xp">+15 XP</div>
+                    <div class="summary-stat-lbl">Punkty XP</div>
+                </div>
+                <div class="summary-stat-box">
+                    <div class="summary-stat-val" id="summary-accuracy">100%</div>
+                    <div class="summary-stat-lbl">Dokładność</div>
+                </div>
+                <div class="summary-stat-box">
+                    <div class="summary-stat-val" id="summary-streak">1 dzień 🔥</div>
+                    <div class="summary-stat-lbl">Twój Streak</div>
+                </div>
+            </div>
+
+            <button id="btn-summary-continue" class="duo-btn duo-btn-primary" style="width: 100%; font-size: 17px; padding: 16px;">
+                KONTYNUUJ
+            </button>
+        </div>
+    </section>
+
+    <!-- Modal: Kreator / Import Własnego Materiału -->
+    <div id="modal-custom" class="modal-overlay hidden">
+        <div class="modal-dialog">
+            <h2>Dodaj własny materiał do nauki 📚</h2>
+            <p>Wklej pojęcia, słówka lub zdania, których chcesz się nauczyć. Aplikacja automatycznie zamieni je w pytania testowe, układanki zdań i łączenie par!</p>
+
+            <input type="text" id="custom-title" class="duo-input" placeholder="Tytuł zestawu (np. Słówka z biologii, Rozmówki hiszpańskie...)" />
+            <input type="text" id="custom-desc" class="duo-input" placeholder="Krótki opis (opcjonalnie)" />
+
+            <textarea id="custom-content" class="duo-textarea" placeholder="Wklej swoje pojęcia w formacie:
+Słowo = Tłumaczenie
+Apple = Jabłko
+Cat = Kot
+Dog = Pies
+Thank you very much = Dziękuję bardzo
+
+Możesz też wkleić format z dwukropkiem lub myślnikiem!"></textarea>
+
+            <div class="modal-actions">
+                <button class="duo-btn duo-btn-secondary" id="btn-close-modal">Anuluj</button>
+                <button class="duo-btn duo-btn-primary" id="btn-save-custom">Utwórz zestaw</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/mascot.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
