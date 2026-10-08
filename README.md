@@ -1,75 +1,122 @@
-# 🦉 DuoLearn - Aplikacja do Nauki w Stylu Duolingo
+<div align="center">
 
-Nowoczesna, interaktywna i grywalizacyjna aplikacja webowa do nauki inspirowana platformą **Duolingo**. Aplikacja jest w 100% statyczna, ultraszybka, nie wymaga instalacji żadnych zależności i działa bezpośrednio w przeglądarce oraz na **GitHub Pages**.
+# 🦉 DuoLearn 🇩🇪
+### Interaktywna platforma do nauki w stylu Duolingo
+
+[![Live Demo](https://img.shields.io/badge/Demo-pliononek.github.io%2Fduo--learn-58cc02?style=for-the-badge&logo=githubpages&logoColor=white)](https://pliononek.github.io/duo-learn/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)]()
+[![No Dependencies](https://img.shields.io/badge/Dependencies-Zero-1cb0f6?style=for-the-badge)]()
+
+**[🎮 Zagraj teraz na żywo](https://pliononek.github.io/duo-learn/)** • **[📖 Dokumentacja](#-kluczowe-funkcjonalności)** • **[➕ Własny materiał](#-dodawanie-własnego-materiału)**
+
+---
+
+</div>
+
+## 📌 O Projekcie
+
+**DuoLearn** to nowoczesna, w pełni statyczna aplikacja webowa do nauki języków z naciskiem na grywalizację i natychmiastowy feedback. Wizualnie i funkcjonalnie czerpie z najlepszych wzorców **Duolingo**: dynamiczna reagująca maskotka, dźwięki syntezatora, licznik dni z rzędu (Streak 🔥), serca ❤️ i zróżnicowane typy zadań.
+
+Domyślny kurs skupia się na kompleksowej nauce **języka niemieckiego**:
+- Odmiana czasowników posiłkowych ***haben*** i ***sein*** w czasie teraźniejszym
+- Niemieckie zaimki pytające (***Fragewörter***)
+- Czas przeszły ***Perfekt*** i zasady tworzenia ***Partizip II*** (czasowniki regularne, końcówki `-et`, `-ieren`, czasowniki rozdzielnie i nierozdzielnie złożone)
+- Praktyczne ćwiczenia oparte na autentycznych kartach pracy
 
 ---
 
 ## ✨ Kluczowe Funkcjonalności
 
-- 🦉 **Dynamiczna Maskotka (SVG)** – interaktywna sowa, która reaguje na Twoje odpowiedzi (radość, brawa, smutek przy pomyłce, czapeczka imprezowa na mecie).
-- 🔊 **Wbudowany Syntezator Dźwięków (Web Audio API)** – przyjemne dzwonki przy poprawnej odpowiedzi, fanfare zwycięstwa i efekty kliknięć bez potrzeby pobierania ciężkich plików MP3.
-- 🗣️ **Wymowa Lektora (Web Speech API)** – automatyczne odczytywanie zwrotów na głos.
-- 🔥 **Grywalizacja Duolingo**:
-  - **Streak (Płomień)** – licznik dni nauki z rzędu z automatycznym resetem przy opuszczeniu dnia.
-  - **Serca (Życia)** – tracone przy pomyłkach (z opcją regeneracji).
-  - **Punkty XP i Kryształy 💎** – nagrody za każdą ukończoną lekcję.
-  - **Pasek postępu** – płynnie napełniający się podczas odpowiadania na pytania.
-- 🎯 **5 Różnorodnych Typów Zadań**:
-  1. **Wielokrotny wybór** (z obsługą klawiszy `1`, `2`, `3`, `4`).
-  2. **Bank Słów (Word Bank)** – układanie zdań z interaktywnych kafelków.
-  3. **Wpisywanie odpowiedzi (Type-In)** – z inteligentnym sprawdzaniem i podpowiedziami.
-  4. **Łączenie par (Match Pairs)** – szybkie dopasowywanie pojęć w parach.
-  5. **Zadania ze słuchu (Listening)** – odsłuchaj i wybierz właściwą odpowiedź.
-- 🔁 **Powtórka błędów** – błędne pytania trafiają na koniec kolejki lekcji, dopóki ich nie opanujesz.
-- ➕ **Kreator i Import Własnego Materiału** – możesz wkleić własną listę słówek lub pytań w formacie `słowo = tłumaczenie` lub JSON, a aplikacja sama wygeneruje z nich pełną lekcję!
+- 🦉 **Dynamiczna Maskotka Sowa (SVG)**  
+  Wektorowa postać reagująca na żywo na stan nauki: cieszy się z trafnych odpowiedzi, smuci przy pomyłce, kibicuje podczas trudniejszych pytań i zakłada czapeczkę imprezową na ekranie sukcesu!
+
+- 🔊 **Wbudowany Syntezator Audio (Web Audio API)**  
+  Autorskie, czyste efekty dźwiękowe generowane proceduralnie (dwutonowy dzwonek sukcesu, niski buzzer pomyłki, kliknięcia kafelków, fanfara wygranej) – **0 zewnętrznych plików MP3**.
+
+- 🗣️ **Niemiecki Lektor (Web Speech API)**  
+  Automatyczne odczytywanie niemieckich zdań i zwrotów z poprawnym akcentem (`de-DE`).
+
+- 🔥 **Mechaniki Grywalizacji**:
+  - **Streak 🔥** – licznik dni nauki z rzędu zapisywany w `localStorage`.
+  - **Serca ❤️** – 5 żyć odnawiających się w trakcie sesji.
+  - **Kryształy 💎 & XP ⚡** – punkty doświadczenia z dziennym celem.
+  - **Ścieżka Lekcji (Tree)** – wijąca się ścieżka z odblokowywanymi poziomami i koronami.
 
 ---
 
-## 🚀 Jak uruchomić lokalnie
+## 🎯 5 Trybów Zadań
 
-Aplikacja nie wymaga Node.js do działania, ale możesz uruchomić lokalny serwer HTTP:
-
-```bash
-# Opcja 1: npx serve
-npx serve .
-
-# Opcja 2: Python
-python -m http.server 8000
-
-# Opcja 3: Live Server w VS Code lub po prostu dwuklik na index.html
-```
+| Typ Zadania | Opis | Sterowanie |
+| :--- | :--- | :--- |
+| **🧩 Łączenie Par (Match Pairs)** | Dwukolumnowe parowanie słówek i form gramatycznych w czasie rzeczywistym. | Myszka / Dotyk |
+| **🔤 Bank Słów (Word Bank)** | Układanie zdań z interaktywnych klocków z automatyczną detekcją szyku. | Klikanie kafelków |
+| **📝 Wpisywanie (Type-In)** | Wpisywanie formy ze sprawdzaniem wariantów (np. sam imiesłów lub z posiłkowym). | Klawiatura + `Enter` |
+| **🔘 Wielokrotny Wybór** | Klasyczny test z natychmiastowym podświetleniem poprawnej odpowiedzi. | Klawisze `1`-`4` lub klik |
+| **🎧 Zadania ze Słuchu** | Odsłuchiwanie wymowy lektora i wybór właściwego zapisu. | Odsłuch + Wybór |
 
 ---
 
-## 🌐 Publikacja na GitHub Pages
+## 📚 Struktura Wbudowanego Kursu Niemieckiego
 
-Repozytorium zawiera gotowy proces GitHub Actions (`.github/workflows/deploy.yml`).
+### **Dział 1: Odmiana haben, sein & Zaimki pytające**
+- **Lekcja 1:** Odmiana czasowników *haben* i *sein* (*ich habe/bin*, *du hast/bist*, *er hat/ist*, *wir haben/sind*, *ihr habt/seid*, *sie haben/sind*).
+- **Lekcja 2:** Niemieckie zaimki pytające (*wer*, *was*, *wie*, *wo*, *wohin*, *wann*, *warum*, *wem*, *wen*, *mit wem*).
 
-1. Zaloguj się do GitHuba w konsoli:
-   ```bash
-   gh auth login
-   ```
-2. Utwórz repozytorium i wyślij kod:
-   ```bash
-   gh repo create duo-learn --public --source=. --remote=origin --push
-   ```
-3. W ustawieniach repozytorium na GitHubie (**Settings -> Pages**):
-   - W sekcji **Build and deployment -> Source** wybierz **GitHub Actions**.
-4. Po paru chwilach Twoja strona będzie dostępna pod adresem:
-   `https://<twój-login>.github.io/duo-learn/`
+### **Dział 2: Czas Perfekt & Tworzenie Partizip II**
+- **Lekcja 3:** Czasowniki regularne: reguła `ge-` + temat + `-t` (*machen ➔ gemacht*, *tanzen ➔ getanzt*, *lernen ➔ gelernt*, *kochen ➔ gekocht*...).
+- **Lekcja 4:** 4 grupy wyjątków:
+  1. Końcówka `-et` dla tematów na `-t/-d/-chn` (*arbeiten ➔ gearbeitet*, *warten ➔ gewartet*).
+  2. Końcówka `-ieren` bez przedrostka `ge-` (*studieren ➔ studiert*, *fotografieren ➔ fotografiert*).
+  3. Czasowniki nierozdzielne bez `ge-` (*besuchen ➔ besucht*, *verkaufen ➔ verkauft*).
+  4. Czasowniki rozdzielnie złożone (*aufmachen ➔ aufgemacht*, *einkaufen ➔ eingekauft*).
+- **Lekcja 5:** Szyk zdania w Perfekt (*haben* na 2. miejscu, a *Partizip II* na końcu zdania).
+
+### **Dział 3: Trening z Kart Pracy**
+- **Lekcja 6 & 7:** Pełny zestaw 14 praktycznych zdań kontekstowych z kart pracy (imprezy, studia w Krakowie, sprzedaż auta, portrety, sprzątanie domu).
 
 ---
 
-## 📝 Format wprowadzania własnych materiałów
+## ➕ Dodawanie Własnego Materiału
 
-W aplikacji wystarczy kliknąć przycisk **➕ Własny materiał** w prawym górnym rogu i wkleić swoje pojęcia w dowolnym z formatów:
+Aplikacja posiada wbudowany **inteligentny parser**. Kliknij przycisk **➕ Własny materiał** w prawym górnym rogu strony i wklej dowolną listę słówek:
 
 ```text
-Jabłko = Apple
-Pies = Dog
-Kot = Cat
-Dzień dobry = Good morning
-Dziękuję bardzo = Thank you very much
+Apple = Jabłko
+Dog = Pies
+Cat = Kot
+Good morning = Dzień dobry
+Thank you very much = Dziękuję bardzo
 ```
 
-Możesz także użyć separatorów `:` lub `-`. Aplikacja automatycznie utworzy kafelki do łączenia par, testy wyboru, pytania pisemne oraz bank słów!
+System automatycznie wygeneruje z Twojej listy:
+1. Pytania wielokrotnego wyboru z automatycznie dobranymi błędnymi odpowiedziami.
+2. Dwukolumnowe kafelki do łączenia par.
+3. Zadania pisemne (Type-In).
+4. Bank słów (Word Bank) dla dłuższych wyrażeń.
+
+---
+
+## 💻 Uruchomienie Lokalne
+
+Aplikacja nie wymaga procesu budowania (Zero Build / Pure Web Standards):
+
+```bash
+# 1. Klonowanie repozytorium
+git clone https://github.com/pliononek/duo-learn.git
+cd duo-learn
+
+# 2. Uruchomienie dowolnego serwera HTTP, np.:
+python -m http.server 8000
+# lub
+npx serve .
+```
+
+Otwórz w przeglądarce: `http://localhost:8000` (lub po prostu kliknij dwukrotnie w `index.html`).
+
+---
+
+## 📄 Licencja
+
+Projekt wydany na warunkach otwartoźródłowej licencji [MIT](LICENSE).  
+Copyright (c) 2026 **pliononek**.
